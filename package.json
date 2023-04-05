@@ -1,0 +1,26 @@
+{
+  "name": "moonraker-spectoda-connector",
+  "version": "0.1.0",
+  "description": "Connection between moonraker and spectoda-node LED controller",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "start:dev": "DEV=1 nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fragaria/moonraker-spectoda-connector.git"
+  },
+  "author": "Pavel Vojacek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fragaria/moonraker-spectoda-connector/issues"
+  },
+  "homepage": "https://github.com/fragaria/moonraker-spectoda-connector#readme",
+  "dependencies": {
+    "got": "^12.6.0",
+    "ws": "^8.13.0"
+  }
+}

@@ -11,21 +11,25 @@
 ```
 #!/bin/bash
 
+sudo -v
+
+NU=$(logname)
+
 cd /home/pi/
 
-git clone git@github.com:fragaria/moonraker-spectoda-connector.git
-
-path=$(pwd)/moonraker-spectoda-connector/npm start
-GROUP=$(id -gn)
+sudo -u $NU git clone https://github.com/fragaria/moonraker-spectoda-connector.git
+cd /home/pi/moonraker-spectoda-connector
+sudo -u $NU npm ci
 
 content='[Unit]
 Description=Bridge for connecting to Moonraker events Spectoda REST API
 After=network.target
 
 [Service]
-User='"$USER"'
-Group='"$GROUP"'
-ExecStart='"$path"'
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/moonraker-spectoda-connector
+ExecStart=node index.js
 Restart=on-failure
 RestartSec=5s
 
@@ -33,13 +37,13 @@ RestartSec=5s
 WantedBy=default.target'
 
 # create the service file
-echo "$content" |  tee /etc/systemd/system/moonraker-spectoda-node-connector.service > /dev/null
+echo "$content" |  tee /etc/systemd/system/moonraker-spectoda-connector.service > /dev/null
 
 # reload the daemon
 systemctl daemon-reload
 
 # enable the service
-systemctl enable --now moonraker-spectoda-node-connector
+systemctl enable --now moonraker-spectoda-connector
 ```
 
 ## Emited labels
@@ -69,12 +73,12 @@ systemctl enable --now moonraker-spectoda-node-connector
 ```
 # to moonraker.conf add this:
 
-[update_manager moonraker-spectoda-node-connector]
+[update_manager moonraker-spectoda-connector]
 type: git_repo
-path: ~/moonraker-spectoda-node-connector
-origin: https://github.com/fragaria/moonraker-spectoda-node-connector.git
+path: ~/moonraker-spectoda-connector
+origin: https://github.com/fragaria/moonraker-spectoda-connector.git
 primary_branch: main
 enable_node_updates: True
 managed_services:
-    moonraker-spectoda-node-connector
+    moonraker-spectoda-connector
 ```

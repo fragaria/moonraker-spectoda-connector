@@ -4,7 +4,8 @@
 
 ### Prerequisites
 
-- nodejs
+- nodejs `curl -fsSL https://deb.nodesource.com/setup_19.x | sudo -E bash - && sudo apt install nodejs -y`
+
 
 # get the current directory + the name of the binary
 

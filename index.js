@@ -48,6 +48,8 @@ const requestInfo = (ws) => {
 }
 
 const parseServerInfo = (ws, data) => {
+    // console.log("parseServerInfo:", data);
+
     if (data.result.klippy_state === 'ready') {
         sendEvent('kread');
     }
@@ -83,8 +85,10 @@ const stateEvents = {
     "error": "error",
 }
 const handleStatusUpdate = (data) => {
+    // console.log("handleStatusUpdate:", data);
+
     const stats = data.params[0].print_stats;
-    if (stats.state) {
+    if (stats && stats.state) {
         const label = stateEvents[stats.state];
         sendEvent(label);
     }
@@ -96,6 +100,8 @@ const handleStatusUpdate = (data) => {
 }
 
 const parseSubscribe = (data) => {
+    // console.log("parseSubscribe:", data);
+
     const stats = data.result?.status?.print_stats
     if (stats && Object.keys(stateEvents).includes(stats.state)) {
         const event = stateEvents[stats.state];
@@ -115,6 +121,7 @@ const connectWs = () => {
 
     ws.on('message', function message(data) {
         const d = JSON.parse(data);
+        // console.log("message:", d);
 
         // Info about server. Not interesting
         if (d.method === 'notify_proc_stat_update') {
@@ -129,6 +136,8 @@ const connectWs = () => {
         }
         if (d.method === 'notify_klippy_ready') {
             sendEvent('kread');
+            // resubscribe to events when klippy is ready
+            ws.send(JSON.stringify(subscribeRpc));
         }
         if (d.method === 'notify_klippy_shutdown') {
             sendEvent('kshut');

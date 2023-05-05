@@ -1,8 +1,8 @@
 import WebSocket from 'ws';
 import got from 'got';
 
-const wsUrl = process.env.MOONRAKER_WS || 'ws://localhost:80/websocket';
-const spectodaUrl = process.env.SPECTODA_URL || 'http://localhost:8888/';
+const wsUrl = process.env.MOONRAKER_WS || 'ws://127.0.0.1:80/websocket';
+const spectodaUrl = process.env.SPECTODA_URL || 'http://127.0.0.1:8888/';
 const devMode = !!process.env.DEV;
 let serverInfoId = 0;
 let lastProgress = undefined;
@@ -109,6 +109,7 @@ const parseSubscribe = (data) => {
     }
 }
 const connectWs = () => {
+    console.log(`Connecting to ${wsUrl}.`);
     const ws = new WebSocket(wsUrl);
 
     ws.on('error', console.error);

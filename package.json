@@ -1,6 +1,6 @@
 {
   "name": "moonraker-spectoda-connector",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Connection between moonraker and spectoda-node LED controller",
   "main": "index.js",
   "type": "module",

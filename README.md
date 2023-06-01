@@ -58,7 +58,7 @@ systemctl enable --now moonraker-spectoda-connector
 
 ### Printer events
 
-- stdby - printer is in standby
+- stand - printer is in standby
 - print - printer is printing
 - pause - printer is paused
 - error - printer is in error state

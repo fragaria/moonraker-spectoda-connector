@@ -78,7 +78,7 @@ const subscribeRpc = buildRpc("printer.objects.subscribe", {
 
 
 const stateEvents = {
-    "standby": "stdby",
+    "standby": "stand",
     "printing": "print",
     "paused": "pause",
     "complete": "done",
